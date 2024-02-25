@@ -1,10 +1,23 @@
 var tabla;
 
 function init(){
-
+    $("#producto_form").on("submit",function(e){
+        guardaryeditar(e);	
+    });
 }
 
 $(document).ready(function(){
+});
+
+function guardaryeditar(e){
+    e.preventDefault();
+    var formData = new FormData($("producto_form")[0]);
+
+}
+
+
+
+$(document).ready(function(){ 
     tabla=$('#producto_data').dataTable({
 		"aProcessing": true,//Activamos el procesamiento del datatables
 	    "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -54,7 +67,7 @@ $(document).ready(function(){
 		}
 	}).DataTable();
 });
-/*
+
 function guardaryeditar(e){
     e.preventDefault();
     var formData = new FormData($("#producto_form")[0]);
@@ -109,7 +122,7 @@ function eliminar(prod_id){
 
             swal.fire(
                 'Eliminado!',
-                'El registro se elimino correctamente.',
+                'El registro se eliminó correctamente.',
                 'success'
             )
         }
@@ -119,9 +132,7 @@ function eliminar(prod_id){
 $(document).on("click","#btnnuevo", function(){
     $('#prod_id').val('');
     $('#mdltitulo').html('Nuevo Registro');
-    $('#modalmantenimiento').modal('show');    
-
+    $('#modalmantenimiento').modal('show');
 });
 
-*/
 init();
