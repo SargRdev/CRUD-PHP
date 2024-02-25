@@ -96,7 +96,8 @@ function editar(prod_id){
     $.post("../../controller/producto.php?op=mostrar",{prod_id:prod_id},function (data) {
         data = JSON.parse(data);
         $('#prod_id').val(data.prod_id);
-        $('#prod_nom').val(data.prod_nom);
+        $('#prod_nombre').val(data.prod_nombre);
+        $('#prod_desc').val(data.prod_desc);
     });
     $('#mdltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');

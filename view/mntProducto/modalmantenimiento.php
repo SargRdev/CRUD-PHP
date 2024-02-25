@@ -12,6 +12,10 @@
                         <label class="form-label" for="prod_nombre">Nombre</label>
                         <input type="text" class="form-control" id="prod_nombre" name="prod_nombre" placeholder="Ingrese Nombre" required>
                     </div>
+                    <div class="form-group">
+                        <label class="form-label" for="prod_desc">Descripción</label>
+                        <textarea row = "3" class = "form-control" id="prod_desc" name="prod_desc" placeholder = "Ingrese Descripción" required ></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cerrar</button>
