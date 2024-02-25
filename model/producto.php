@@ -1,71 +1,66 @@
 <?php
     class Producto extends Conectar{
-        
         public function get_producto(){
-            $conectar = parent::conexion();
+            $conectar= parent::conexion();
             parent::set_names();
+            $sql="SELECT * FROM tb_producto WHERE est=1";
+            $sql=$conectar->prepare($sql);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
 
-            $sql = "SELECT * FROM tb_producto WHERE est=1";
-            $sql = $conectar->prepare($sql);
-            $sql->excute();
-            return $resultado = $sql->fetchAll();
+        public function get_producto_x_id($prod_id){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="SELECT * FROM tb_producto WHERE prod_id = ?";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1,$prod_id);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+        public function delete_producto($prod_id){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="UPDATE tb_producto
+                SET
+                    est=0,
+                    fecha_elim=now()
+                WHERE
+                    prod_id = ?";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1,$prod_id);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+        public function insert_producto($prod_nom){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="INSERT INTO tb_producto (prod_id, prod_nombre, fecha_crea, fecha_modi, fecha_elim, est) VALUES (NULL, ?, now(), NULL, NULL, 1);";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1,$prod_nom);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
+        }
+
+        public function update_producto($prod_id,$prod_nom){
+            $conectar= parent::conexion();
+            parent::set_names();
+            $sql="UPDATE tb_producto
+                SET
+                    prod_nombre=?,
+                    fecha_modi=now()
+                WHERE
+                    prod_id = ?";
+            $sql=$conectar->prepare($sql);
+            $sql->bindValue(1,$prod_nom);
+            $sql->bindValue(2,$prod_id);
+            $sql->execute();
+            return $resultado=$sql->fetchAll();
         }
 
 
-        public function get_producto($id){
-            $conectar = parent::conexion();
-            parent::set_names();
-
-            $sql = "SELECT * FROM tb_producto WHERE prod_id = ?";
-            $sql = $conectar->prepare($sql);
-            $sql->bindValue(1,$id);
-            $sql->excute();
-            return $resultado = $sql->fetchAll();
-        }
-
-        public function delete_producto($id){
-            $conectar = parent::conexion();
-            parent::set_names();
-
-            $sql = "UPDATE tb_producto 
-                SET 
-                 est = 0,
-                 fech_elim = now(),
-                WHERE prod_id = ?
-            ";
-            $sql = $conectar->prepare($sql);
-            $sql->bindValue(1,$id);
-            $sql->excute();
-            return $resultado = $sql->fetchAll();
-        }
-
-        public function insert_producto($nombre){
-            $conectar = parent::conexion();
-            parent::set_names();
-
-            $sql = "INSERT INTO tb_producto (prod_id,prod_nom,prod_crea,) VALUES(null,?,now(),1)";
-            $sql = $conectar->prepare($sql);
-            $sql->bindValue(1,$nombre);
-            $sql->excute();
-            return $resultado = $sql->fetchAll();
-        }
-
-        public function update_producto($id, $nombre){
-            $conectar = parent::conexion();
-            parent::set_names();
-
-            $sql = "UPDATE tb_producto 
-                SET 
-                 prod_nom = ?,
-                 fech_modi = now(),
-                WHERE prod_id = ?
-            ";
-            $sql = $conectar->prepare($sql);
-            $sql->bindValue(1,$nombre);
-            $sql->bindValue(2,$id);
-            $sql->excute();
-            return $resultado = $sql->fetchAll();
-        }
 
     }
 ?>

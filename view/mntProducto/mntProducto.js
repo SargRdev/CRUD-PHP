@@ -54,7 +54,7 @@ $(document).ready(function(){
 		}
 	}).DataTable();
 });
-
+/*
 function guardaryeditar(e){
     e.preventDefault();
     var formData = new FormData($("#producto_form")[0]);
@@ -123,5 +123,5 @@ $(document).on("click","#btnnuevo", function(){
 
 });
 
-
+*/
 init();
