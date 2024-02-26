@@ -7,17 +7,15 @@ function init(){
 }
 
 $(document).ready(function(){
-});
 
-function guardaryeditar(e){
-    e.preventDefault();
-    var formData = new FormData($("producto_form")[0]);
+    $('#cat_id').select2({
+        dropdownParent: $("#modalmantenimiento")
+    });
 
-}
+    $.post("../../controller/categoria.php?op=combo",function (data) {
+        $("#cat_id").html(data);
+    });
 
-
-
-$(document).ready(function(){ 
     tabla=$('#producto_data').dataTable({
 		"aProcessing": true,//Activamos el procesamiento del datatables
 	    "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -96,8 +94,10 @@ function editar(prod_id){
     $.post("../../controller/producto.php?op=mostrar",{prod_id:prod_id},function (data) {
         data = JSON.parse(data);
         $('#prod_id').val(data.prod_id);
-        $('#prod_nombre').val(data.prod_nombre);
+        $('#cat_id').val(data.cat_id).trigger('change');
+        $('#prod_nom').val(data.prod_nom);
         $('#prod_desc').val(data.prod_desc);
+        $('#prod_cant').val(data.prod_cant);
     });
     $('#mdltitulo').html('Editar Registro');
     $('#modalmantenimiento').modal('show');
@@ -123,7 +123,7 @@ function eliminar(prod_id){
 
             swal.fire(
                 'Eliminado!',
-                'El registro se eliminó correctamente.',
+                'El registro se elimino correctamente.',
                 'success'
             )
         }
@@ -132,6 +132,11 @@ function eliminar(prod_id){
 
 $(document).on("click","#btnnuevo", function(){
     $('#prod_id').val('');
+    $('#cat_id').val('').trigger('change');
+    $('#prod_nom').val('');
+    $('#prod_desc').val('');
+    $('#prod_cant').val('');
+
     $('#mdltitulo').html('Nuevo Registro');
     $('#modalmantenimiento').modal('show');
 });
